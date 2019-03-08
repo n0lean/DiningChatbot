@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
 import { ChatFeed, Message, ChatBubble, BubbleGroup } from 'react-chat-ui'
-import axios from 'axios'
-import { EROFS } from 'constants';
 
 const uuidv1 = require('uuid/v1');
 var apigClientFactory = require('aws-api-gateway-client').default;
