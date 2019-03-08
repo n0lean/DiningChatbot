@@ -4,11 +4,13 @@ import { ChatFeed, Message, ChatBubble, BubbleGroup } from 'react-chat-ui'
 import axios from 'axios'
 import { EROFS } from 'constants';
 
+const uuidv1 = require('uuid/v1');
 var apigClientFactory = require('aws-api-gateway-client').default;
 
 var config = { invokeUrl: 'https://bvm2azi8h1.execute-api.us-east-1.amazonaws.com' };
 var apigClient = apigClientFactory.newClient(config);
 
+var id = uuidv1();
 var method = 'POST';
 var params = {};
 var additionParms = {
@@ -68,13 +70,14 @@ class App extends Component {
         {
           "type": "type_a",
           "unstructured": {
-            "id": "123",
+            "id": id,
             "text": input.value,
             "timestamp": time
           }
         }
       ]
     }
+    console.log(out);
     input.value = '';
 
     apigClient.invokeApi(params, path, method, additionParms, out)
