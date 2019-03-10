@@ -55,6 +55,7 @@ class App extends Component {
   }
 
   componentDidMount() {
+      console.log('I love AWS');
       var parsed = queryString.parse(this.props.location.hash);
       const prevState = this.state;
       prevState.id_token = parsed.id_token;
@@ -90,8 +91,7 @@ class App extends Component {
       ]
     }
     console.log(this.state.id_token);
-    console.log(this.state.access_token);
-
+    console.log(additionParms);
     
 
     input.value = '';
