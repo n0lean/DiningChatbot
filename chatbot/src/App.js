@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import './App.css';
 import { ChatFeed, Message, ChatBubble, BubbleGroup } from 'react-chat-ui'
+import { withRouter } from 'react-router-dom'
+
+import queryString from 'query-string'
 
 const uuidv1 = require('uuid/v1');
 var apigClientFactory = require('aws-api-gateway-client').default;
@@ -42,11 +45,22 @@ const styles = {
 
 
 class App extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
-      messages: [],
+      id_token: null,
+      access_token: null,
+      messages: []
     };
+  }
+
+  componentDidMount() {
+      var parsed = queryString.parse(this.props.location.hash);
+      const prevState = this.state;
+      prevState.id_token = parsed.id_token;
+      prevState.access_token = parsed.access_token;
+
+      additionParms['headers'] = {'Authorization' : parsed.id_token}
   }
 
   onMessageSubmit(e) {
@@ -75,7 +89,11 @@ class App extends Component {
         }
       ]
     }
-    console.log(out);
+    console.log(this.state.id_token);
+    console.log(this.state.access_token);
+
+    
+
     input.value = '';
 
     apigClient.invokeApi(params, path, method, additionParms, out)
@@ -133,4 +151,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default withRouter(App);
